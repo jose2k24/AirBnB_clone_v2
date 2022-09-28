@@ -1,52 +1,50 @@
 #!/usr/bin/python3
-"""The / route"""
+"""
+starts a Flask web application
+"""
 
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+
+@app.route("/", strict_slashes=False)
+def index():
+    return "Hello HBNB!"
+
+
+@app.route("/hbnb", strict_slashes=False)
+def hbnb():
+    return "HBNB"
+
+
+@app.route("/c/<text>", strict_slashes=False)
+def C_is_fun(text):
+    return "C " + text.replace("_", " ")
+
+
+@app.route("/python", strict_slashes=False)
+def python():
+    return "Python is cool"
+
+
+@app.route("/python/<text>", strict_slashes=False)
+def Python_is_magic(text):
+    return "Python " + text.replace("_", " ")
+
+
+@app.route("/number/<int:n>", strict_slashes=False)
+def n_is_a_number(n):
+    return "{:d} is a number".format(n)
+
+
+@app.route('/number_template/<int:n>', strict_slashes=False)
+def number_template(n):
+    return render_template('5-number.html', num=n)
+
+@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
+def number_odd_or_even(n):
+    return render_template('6-number_odd_or_even.html', num=n)
 
 if __name__ == "__main__":
-    from flask import Flask
-    import flask
-
-    app = Flask(__name__)
-
-    @app.route('/', strict_slashes=False)
-    def hello_hbnb():
-        """root folder route"""
-        return "Hello HBNB!"
-
-    @app.route('/hbnb', strict_slashes=False)
-    def hbnb_route():
-        """/hbnb/ folder route"""
-        return "HBNB"
-
-    @app.route('/c/<text>', strict_slashes=False)
-    def c_route(text):
-        """output some text depending on url after /c/"""
-        return "C " + text.replace('_', ' ')
-
-    @app.route('/python/', defaults={'text': "is cool"}, strict_slashes=False)
-    @app.route('/python/<text>', strict_slashes=False)
-    def python_route(text):
-        """output some text depending on url after /python/"""
-        return "Python " + text.replace('_', ' ')
-
-    @app.route('/number/<int:n>', strict_slashes=False)
-    def number_route(n):
-        """output some number depending on url after /number/"""
-        return str(n) + " is a number"
-
-    @app.route('/number_template/<int:n>', strict_slashes=False)
-    def number_template(n):
-        """output some number depending on url after /number_template/"""
-        return flask.render_template('5-number.html', n=n)
-
-    @app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
-    def number_odd_or_even(n):
-        """output some number and odd/even"""
-        if n % 2 == 0:
-            evenodd = "even"
-        else:
-            evenodd = "odd"
-        return flask.render_template('6-number_odd_or_even.html', n=n,
-                                     evenodd=evenodd)
-
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port='5000')

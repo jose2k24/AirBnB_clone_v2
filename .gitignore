@@ -1,2 +1,4 @@
-/.env
-/versions/
+*.pyc
+test_params_create
+*.json
+main*.py
